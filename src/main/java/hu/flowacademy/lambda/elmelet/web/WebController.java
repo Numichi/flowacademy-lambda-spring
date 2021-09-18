@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * A @RestController kávi mindig kötelező. Vagy @Controller és @ResponseBody együtteség használod.
+ * A @RestController kvázi mindig kötelező. Vagy @Controller és @ResponseBody együtteség használod.
  * Ha csak a @Controller-t használod, akkor szerver oldali front-end renderelést hajtana végre és "text/html" típusú
  * választ adna Content-Type-ban.
  *
@@ -53,7 +53,7 @@ public class WebController {
      *
      * Response: 10
      *
-     * Értelem szerűen a String lehetne "int"-is. De alábbi metórusoknál lesz visszautalás erre. :)
+     * Értelem szerűen a String lehetne "int"-is. De alábbi metódusoknál lesz visszautalás erre.
      */
     @GetMapping("{id}")
     public String getById(@PathVariable String id) {
@@ -61,8 +61,12 @@ public class WebController {
     }
 
     /**
-     * Ha ez @GetMapping lenne, akkor ötközne!!
+     * Ha ez @GetMapping lenne, akkor ötközne az egyel fentebb lévővel!
+     *
      * Ha változó neve nem egyezik meg a {}-ban foglaltal, akkor külön kell jelezni.
+     * - removeValue(@PathVariable("id") int willBeDeleted)
+     * - removeValue(@PathVariable int id)
+     *
      * Persze több {xy}-t is elbít.
      */
     @DeleteMapping("{id}")
@@ -73,7 +77,7 @@ public class WebController {
     /**
      * FIGYELEM! Ha getById feletti "{id}"-val NEM fog ütközni. Igaz, az is String-et nyer ki és a
      * GET http://localhost:8080/elmelet/web/page hívásra is illeszkedik, de NEM FOG ÜTKÖZNI!!!
-     * Mert, mivel itt be lett állítva a "page" így ez kitüntetett szereplő, így:
+     * Mert, mivel itt be lett állítva a "page" így ez kitüntetett szereplő, azaz:
      *
      * GET http://localhost:8080/elmelet/web/page => ez fog lefutni
      * GET http://localhost:8080/elmelet/web/alma => getById fog lefutni
@@ -88,7 +92,7 @@ public class WebController {
      * A @RequestBody-val jelzed, hogy beérkező JSON-t szeretnél feldolgozni.
      * A @Valid-al meg jelzed, hogy van tartalmi ellenőrzési igényed.
      *
-     * A @ResponseStatus válasz kódot tudod definiálni.
+     * A @ResponseStatus válasz kódot tudod megadni.
      * - Paraméter nélkül HTTP500 (Internal Server Error)
      * - Ha nincs is ilyen annotáció: HTTP200 (OK)
      */
@@ -108,6 +112,8 @@ public class WebController {
 
     /**
      * GET http://localhost:8080/elmelet/web/query?foo=xxx&bar=yyy
+     *
+     * Persze a paraméter sorrend nem számít, de ez igaz a többi annotációra is.
      */
     @GetMapping("query")
     public String query(@RequestParam String foo, @RequestParam("bar") String asd) {
